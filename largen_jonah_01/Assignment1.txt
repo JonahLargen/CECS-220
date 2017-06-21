@@ -17,7 +17,7 @@ public class Problem1 {
 		System.out.println("JJ JJJ      HHH   HHH   LL       ");
 		System.out.println("JJ JJJ      HHH   HHH   LL       ");
 		System.out.println("JJJJJJ      HHH   HHH   LLLLLLLLL");
-		System.out.println("JJJJJJ      HHH   HHH   LLLLLLLLL");
+		System.out.println("JJJJJJ      HHH   HHH   LLLLLLLLL");a
 	}
 	
 }
