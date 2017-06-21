@@ -1,0 +1,151 @@
+###################################################################################
+###############################           #########################################
+############################### PROBLEM 1 #########################################
+###############################           #########################################
+###################################################################################
+
+package main;
+
+public class Problem1 {
+	
+	public static void main(String[] args){
+		System.out.println("JJJJJJJJJ   HHH   HHH   LL       ");
+		System.out.println("JJJJJJJJJ   HHH   HHH   LL       ");
+		System.out.println("   JJJ      HHH   HHH   LL       ");
+		System.out.println("   JJJ      HHH   HHH   LL       ");
+		System.out.println("   JJJ      HHHHHHHHH   LL       ");
+		System.out.println("JJ JJJ      HHH   HHH   LL       ");
+		System.out.println("JJ JJJ      HHH   HHH   LL       ");
+		System.out.println("JJJJJJ      HHH   HHH   LLLLLLLLL");
+		System.out.println("JJJJJJ      HHH   HHH   LLLLLLLLL");
+	}
+	
+}
+
+###################################################################################
+###############################           #########################################
+############################### PROBLEM 2 #########################################
+###############################           #########################################
+###################################################################################
+
+package main;
+
+import java.awt.Graphics;
+
+import javax.swing.JApplet;
+
+public class Problem2 extends JApplet{
+	
+	private static final long serialVersionUID = -1L;
+	
+	public void paint(Graphics page){
+		page.drawRect(50, 50, 40, 40);
+		page.drawRect(60, 80, 225, 30);
+		page.drawOval(275, 100, 20, 20);
+		page.drawLine(35, 60, 100, 120);
+		page.drawString("Out of clutter, find simplicity.", 110, 70);
+		page.drawString("-- Albert Einstein", 130, 100);
+	}
+	
+}
+
+###################################################################################
+###############################           #########################################
+############################### PROBLEM 3 #########################################
+###############################           #########################################
+###################################################################################
+
+package main;
+
+import java.util.Scanner;
+
+public class Problem3 {
+
+	public static void main(String[] args){
+		double hours, minutes, seconds = 0;
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter number of hours: ");
+		hours = scan.nextDouble();
+		System.out.println("Enter number of minutes: ");
+		minutes = scan.nextDouble();
+		System.out.println("Enter number of seconds: ");
+		seconds = scan.nextDouble() + 60 * minutes + 3600 * hours;
+		System.out.println("Total: " + (int)seconds + " seconds.");
+		scan.close();
+	}
+
+}
+
+###################################################################################
+###############################           #########################################
+############################### PROBLEM 4 #########################################
+###############################           #########################################
+###################################################################################
+
+package main;
+
+import java.util.Scanner;
+
+public class Problem4 {
+
+	public static void main(String[] args){
+		int length, perimeter, area = 0;
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter integer length of square's side: ");
+		length = scan.nextInt();
+		perimeter = 4 * length;
+		area = length * length;
+		System.out.println("Perimeter: " + perimeter + " Units.");
+		System.out.println("Area: " + area + " Units Squared.");
+		scan.close();
+	}
+	
+}
+
+###################################################################################
+###############################           #########################################
+############################### PROBLEM 5 #########################################
+###############################           #########################################
+###################################################################################
+
+package main;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
+import javax.swing.JApplet;
+
+public class Problem5 extends JApplet{
+	
+	private static final long serialVersionUID = -1L;
+	
+	public void paint(Graphics page){
+		Graphics2D page2 = (Graphics2D)page;
+		page2.setStroke(new BasicStroke(2));
+		page2.setColor(Color.RED);
+		page2.fillOval(30+60*0, 50, 30, 45);
+		page2.setColor(Color.CYAN);
+		page2.fillOval(30+60*1, 50+25, 30, 45);
+		page2.setColor(Color.GREEN);
+		page2.fillOval(30+60*2, 50, 30, 45);
+		page2.setColor(Color.MAGENTA);
+		page2.fillOval(30+60*3, 50+25, 30, 45);
+		page2.setColor(Color.ORANGE);
+		page2.fillOval(30+60*4, 50, 30, 45);
+		page2.setColor(Color.LIGHT_GRAY);
+		page2.drawLine(45+60*0, 95, 45, 145);
+		page2.drawLine(45+60*1, 95+25, 45+60*1, 145+25);
+		page2.drawLine(45+60*2, 95, 45+60*2, 145);
+		page2.drawLine(45+60*3, 95+25, 45+60*3, 145+25);
+		page2.drawLine(45+60*4, 95, 45+60*4, 145);
+		page2.setColor(Color.black);
+		page2.drawOval(30+60*0, 50, 30, 45);
+		page2.drawOval(30+60*1, 50+25, 30, 45);
+		page2.drawOval(30+60*2, 50, 30, 45);
+		page2.drawOval(30+60*3, 50+25, 30, 45);
+		page2.drawOval(30+60*4, 50, 30, 45);
+	}
+	
+}

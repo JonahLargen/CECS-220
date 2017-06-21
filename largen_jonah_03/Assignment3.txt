@@ -1,0 +1,531 @@
+###################################################################################
+###############################           #########################################
+############################### PROBLEM 1 #########################################
+###############################           #########################################
+###################################################################################
+
+package main;
+
+import java.text.NumberFormat;
+
+public class Account { // Problem1
+
+	private final double RATE = 0.035;
+	private long acctNumber;
+	private double balance;
+	private String name;
+
+	public Account(String owner, long account, double initial){
+		name = owner;
+		acctNumber = account;
+		balance = initial;
+	}
+
+	public double deposit(double amount){
+		if (amount > 0){
+			balance = balance + amount;
+		}else{
+			System.out.println("Error: Must be a valid positive deposit.");
+		}
+		return balance;
+	}
+
+	public double withdraw(double amount, double fee){
+		double totalWithdrawal = amount + fee;
+		if (totalWithdrawal > balance){
+			System.out.println("Error: Withdrawal amount with fees cannot exceed your balance.");
+		}else{
+			balance = balance - amount - fee;
+		}
+		return balance;
+	}
+
+	public double addInterest(){
+		balance += (balance * RATE);
+		return balance;
+	}
+
+	public double getBalance(){
+		return balance;
+	}
+
+	public String toString (){
+		NumberFormat fmt = NumberFormat.getCurrencyInstance();
+		return (acctNumber + "\t" + name + "\t" + fmt.format(balance));
+	}
+}
+
+###################################################################################
+
+package main;
+
+public class AccountDriver{ // Problem1 Driver
+
+	public static void main(String[] args){
+		Account acct = new Account("Edward Demsey", 93757, 750);
+		System.out.println("Demsey Starting balance: $" + acct.getBalance());
+		System.out.println();
+		
+		acct.withdraw(748.50, 1.50);
+		System.out.println("New Demsey balance after withdrawl: $" + acct.getBalance());
+		System.out.println();
+		
+		acct.withdraw(5, 1.50);
+		System.out.println("New Demsey balance after withdrawl: $" + acct.getBalance());
+		System.out.println();
+		
+		acct.deposit(-550);
+		System.out.println("New Demsey balance after withdrawl: $" + acct.getBalance());
+		System.out.println();
+
+		acct.deposit(200);
+		acct.addInterest();
+		System.out.println("New Demsey balance after interest: $" + acct.getBalance());
+		System.out.println();
+
+		System.out.println("Final Demsey account information: ");
+		System.out.println(acct);
+	}
+}
+
+###################################################################################
+###############################           #########################################
+############################### PROBLEM 2 #########################################
+###############################           #########################################
+###################################################################################
+
+package main;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+@SuppressWarnings("serial")
+public class StyleOptions extends JPanel { // Problem2
+	
+	private JLabel saying;
+	private JCheckBox bold, italic;
+	private JTextField font;
+
+	public StyleOptions(){
+		
+		saying = new JLabel("Say it with style!");
+		saying.setFont(new Font("Helvetica", Font.PLAIN, 36));
+
+		bold = new JCheckBox("Bold");
+		bold.setBackground(Color.cyan);
+		italic = new JCheckBox("Italic");
+		italic.setBackground(Color.cyan);
+		
+		font = new JTextField("36");
+		font.setBackground(Color.lightGray);
+
+		StyleListener listener = new StyleListener();
+		bold.addItemListener(listener);
+		italic.addItemListener(listener);
+		
+		KeyListener keyListener = new KeyListener(){
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER){
+					int style = Font.PLAIN;
+					if (bold.isSelected()) style += Font.BOLD;
+					if (italic.isSelected()) style += Font.ITALIC;
+					saying.setFont(new Font("Helvetica", style, Integer.parseInt(font.getText())));
+				}
+			}
+			@Override
+			public void keyReleased(KeyEvent arg0) {}
+			@Override
+			public void keyTyped(KeyEvent arg0) {}	
+		};
+		font.addKeyListener(keyListener);
+
+		add(saying);
+		add(bold);
+		add(italic);
+		add(font);
+
+		setBackground(Color.cyan);
+		setPreferredSize(new Dimension(1000, 300));
+	}
+
+	private class StyleListener implements ItemListener {
+		public void itemStateChanged(ItemEvent event){
+			int style = Font.PLAIN;
+
+			if (bold.isSelected())
+				style += Font.BOLD;
+
+			if (italic.isSelected())
+				style += Font.ITALIC;
+
+			saying.setFont(new Font("Helvetica", style, Integer.parseInt(font.getText())));
+		}
+	}
+}
+
+###################################################################################
+
+package main;
+
+import javax.swing.JFrame;
+
+public class StyleOptionsDriver { // Problem2 Driver
+
+	public static void main(String[] args){
+		
+		JFrame frame = new JFrame("Style Options");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		StyleOptions panel = new StyleOptions();
+		frame.getContentPane().add(panel);
+
+		frame.pack();
+		frame.setVisible(true);
+	}
+}
+
+###################################################################################
+###############################           #########################################
+############################### PROBLEM 3 #########################################
+###############################           #########################################
+###################################################################################
+
+package main;
+
+import java.util.Scanner;
+
+public class Problem3 {
+
+	public static void main(String[] args){
+		Scanner scan = new Scanner(System.in);
+		String input = "";
+		int a = 0, e = 0, i = 0, o = 0, u = 0, nonvowel = 0;
+		System.out.println("Enter a string: ");
+		input = scan.nextLine();
+		for (int z = 0; z < input.length(); z++){
+			String temp = input.substring(z, z+1);
+			if (temp.equals("a")) a++;
+			else if (temp.equals("e")) e++;
+			else if (temp.equals("i")) i++;
+			else if (temp.equals("o")) o++;
+			else if (temp.equals("u")) u++;
+			else if (temp.equals("A") || temp.equals("E") || temp.equals("I") || temp.equals("O") || temp.equals("U")) {}
+			else nonvowel++;
+		}
+		System.out.println("Total lowercase a: \t" + a);
+		System.out.println("Total lowercase e: \t" + e);
+		System.out.println("Total lowercase i: \t" + i);
+		System.out.println("Total lowercase o: \t" + o);
+		System.out.println("Total lowercase u: \t" + u);
+		System.out.println("Total nonvowels: \t" + nonvowel);
+		scan.close();
+	}
+	
+}
+
+###################################################################################
+###############################           #########################################
+############################### PROBLEM 4 #########################################
+###############################           #########################################
+###################################################################################
+
+package main;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+import javax.swing.JApplet;
+
+public class Problem4 extends JApplet{
+
+private static final long serialVersionUID = -1L;
+	
+	public void paint(Graphics page){
+		this.setSize(1250,250);
+		page.setColor(Color.lightGray);
+		page.fillRect(0, 0, 1250, 250);
+		page.setColor(Color.black);
+		for(int i = 0; i < 20; i++){
+			int rand = (int)(Math.random()*1200+10);
+			page.fillRect(20, 20+i*10, rand, 5);
+		}
+	}
+	
+}
+
+###################################################################################
+###############################           #########################################
+############################### PROBLEM 5 #########################################
+###############################           #########################################
+###################################################################################
+
+package main;
+
+import java.util.ArrayList;
+
+public class Course { // Problem 5
+	
+	private String name;
+	private ArrayList<Student> students;
+	
+	public Course(String name){
+		this.setName(name);
+		this.students = new ArrayList<Student>();
+	}
+
+	public String getName(){
+		return name;
+	}
+
+	public void setName(String name){
+		this.name = name;
+	}
+	
+	public void addStudent(Student student){
+		students.add(student);
+	}
+	
+	public double average(){
+		double average = 0;
+		int count = 0;
+		for (Student student: students){
+			average+=student.getTestScoreAverage();
+			count++;
+		}
+		average/=count;
+		return average;
+	}
+	
+	public void roll(){
+		System.out.println("Roll [" + this.getName() + "]:");
+		for (Student student: students){
+			System.out.println("---------------");
+			System.out.println(student.toString());
+		}
+		System.out.println("---------------");
+	}
+}
+
+###################################################################################
+
+package main;
+
+public class Student { // Problem 5
+	
+	private String	firstName, lastName;
+	private Address	homeAddress, schoolAddress;
+	private double testScoreAverage;
+
+
+	public Student(String first, String last, Address home, Address school, double testScoreAverage){
+		firstName = first;
+		lastName = last;
+		homeAddress = home;
+		schoolAddress = school;
+		this.testScoreAverage = testScoreAverage;
+	}
+
+	public String toString(){
+		String result;
+
+		result = firstName + " " + lastName + "\n";
+		result += "Home Address:\n" + homeAddress + "\n";
+		result += "School Address:\n" + schoolAddress;
+
+		return result;
+	}
+
+	public double getTestScoreAverage(){
+		return testScoreAverage;
+	}
+
+	public void setTestScoreAverage(double testScores){
+		this.testScoreAverage = testScores;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Address getHomeAddress() {
+		return homeAddress;
+	}
+
+	public void setHomeAddress(Address homeAddress) {
+		this.homeAddress = homeAddress;
+	}
+
+	public Address getSchoolAddress() {
+		return schoolAddress;
+	}
+
+	public void setSchoolAddress(Address schoolAddress) {
+		this.schoolAddress = schoolAddress;
+	}
+
+}
+
+###################################################################################
+
+package main;
+
+public class Address // Problem 5
+{
+	private String	streetAddress, city, state;
+	private long	zipCode;
+
+	public Address(String street, String town, String st, long zip)
+	{
+		streetAddress = street;
+		city = town;
+		state = st;
+		zipCode = zip;
+	}
+
+	public String toString()
+	{
+		String result;
+
+		result = streetAddress + "\n";
+		result += city + ", " + state + "  " + zipCode;
+
+		return result;
+	}
+}
+
+###################################################################################
+
+package main;
+
+import java.text.DecimalFormat;
+
+public class CourseDriver { // Problem5 Driver
+	
+	public static void main(String[] args){
+		DecimalFormat df = new DecimalFormat("#.00");
+		Course course = new Course("Math 101");
+		course.addStudent(new Student("John", "Smith", new Address("1328 4th Street", "Louisville", "KY", 40208), new Address("345 Brook Street", "Louisville", "KY", 40208), 93.45));
+		course.addStudent(new Student("Jane", "Doe", new Address("951 Green Street", "Nashua", "NH", 03060), new Address("5893 Main Street", "Nashua", "NH", 03060), 84.37));
+		course.addStudent(new Student("Don", "Johnson", new Address("85 Bohemia Lane", "Dorchester Center", "MA", 02124), new Address("786 Grape Road", "Dorchester Center", "MA", 02124), 72.79));
+		course.addStudent(new Student("Sarah", "Jones", new Address("87 Wakehurst St", "Park Ridge", "IL", 60068), new Address("9148 Mountain Road", "Park Ridge", "IL", 60068), 89.12));
+		course.roll();
+		System.out.println("Test Score Average: " + df.format(course.average()) + "%");
+	}
+	
+}
+
+###################################################################################
+###############################           #########################################
+############################### PROBLEM 6 #########################################
+###############################           #########################################
+###################################################################################
+
+package main;
+
+public interface Priority { // Problem 6
+	public void setPriority(int priority);
+	public int getPriority();
+}
+
+###################################################################################
+
+package main;
+
+public class Task implements Priority{ // Problem 6
+
+	private int priority;
+	private String name;
+	
+	public Task(int priority, String name){
+		this.priority = priority;
+		this.name = name;
+	}
+
+	@Override
+	public int getPriority(){
+		return priority;
+	}
+
+	@Override
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
+	
+}
+
+###################################################################################
+
+package main;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class TaskDriver { // Problem 6 Driver
+		
+	public static void main(String[] args){
+		ArrayList<Task> array = new ArrayList<Task>(Arrays.asList(
+				new Task(1, "Do Dishes"),
+				new Task(5, "Walk Dog"),
+				new Task(3, "Cut Grass"),
+				new Task(2, "Grocery Shopping"),
+				new Task(4, "Clean Bathroom")));
+		
+		System.out.println("To Do List:\n---------------");
+		for (Task task : array){
+			System.out.println("Task: " + task.getName() + " [Priority=" + task.getPriority() + "]");
+		}
+		System.out.println("---------------\n");
+		
+		Task tempTask = null;
+		int tempPriority = 0;
+		for (Task task: array){
+			if (task.getPriority() > tempPriority){
+				tempPriority = task.getPriority();
+				tempTask = task;
+			}
+		}
+		System.out.println("Highest Priority Task: " + tempTask.getName() + " [Priority=" + tempTask.getPriority() + "]");
+		
+		tempTask = null;
+		tempPriority = Integer.MAX_VALUE;
+		for (Task task: array){
+			if (task.getPriority() < tempPriority){
+				tempPriority = task.getPriority();
+				tempTask = task;
+			}
+		}
+		System.out.println("Lowest Priority Task: " + tempTask.getName() + " [Priority=" + tempTask.getPriority() + "]");
+	}
+	
+}
